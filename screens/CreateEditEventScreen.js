@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react"; // <-- added useEffect
 import {
   View,
   TextInput,
@@ -16,6 +16,14 @@ const CATEGORIES = ["Music", "Art", "Tech", "Sports", "Other"];
 
 export default function CreateEditEventScreen({ route, navigation }) {
   const editingEvent = route.params?.event;
+
+  // Dynamically set navigation header title
+  useEffect(() => {
+    navigation.setOptions({
+      title: editingEvent ? "Edit Event" : "Create Event",
+    });
+  }, [editingEvent, navigation]);
+
   const { createEvent, updateEvent } = useContext(EventsContext);
   const { user } = useContext(AuthContext);
 

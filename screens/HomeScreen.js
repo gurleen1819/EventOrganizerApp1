@@ -34,7 +34,7 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>gatherup</Text>
+        <Text style={styles.title}>Event Organizer</Text>
       </View>
 
       {/* Search */}

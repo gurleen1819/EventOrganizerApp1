@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons"; // <-- import Icon
 import { AuthContext } from "../contexts/AuthProvider";
 
 export default function SignUpScreen({ navigation }) {
@@ -29,6 +30,9 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* Event icon */}
+      <Icon name="event" size={64} color="#f06292" style={styles.icon} />
+
       <Text style={styles.title}>Create account</Text>
 
       <TextInput
@@ -66,6 +70,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff0f6",
     justifyContent: "center",
     padding: 16,
+  },
+  icon: {
+    alignSelf: "center",
+    marginBottom: 16,
   },
   title: {
     fontSize: 24,

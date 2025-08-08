@@ -6,8 +6,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Alert,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";  // <-- import Icon
 import { AuthContext } from "../contexts/AuthProvider";
 
 export default function SignInScreen({ navigation }) {
@@ -27,7 +27,10 @@ export default function SignInScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>GatherUp</Text>
+      {/* Event icon */}
+      <Icon name="event" size={64} color="#f06292" style={styles.icon} />
+
+      <Text style={styles.title}>Event Organizer</Text>
 
       <TextInput
         placeholder="Email"
@@ -67,6 +70,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff0f6",
     justifyContent: "center",
     padding: 16,
+  },
+  icon: {
+    alignSelf: "center",
+    marginBottom: 16,
   },
   title: {
     fontSize: 32,
