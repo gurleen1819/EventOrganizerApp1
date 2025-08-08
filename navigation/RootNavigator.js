@@ -22,8 +22,9 @@ export default function RootNavigator() {
           <>
             <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Events" component={EventsScreen} options={{ title: "All Events" }} />
-            <Stack.Screen name="CreateEdit" component={CreateEditEventScreen} options={{ title: "Create / Edit Event" }} />
+            <Stack.Screen name="CreateEdit" component={CreateEditEventScreen} options={{ title: "Create Event" }} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
+            
           </>
         ) : (
           <>
