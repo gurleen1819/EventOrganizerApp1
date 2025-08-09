@@ -35,7 +35,7 @@ export default function EventCard({ event, onPress, onEdit, highlight }) {
       onPress={onPress}
       style={[styles.card, highlight ? styles.highlightCard : null]}
     >
-      {/* Title + Favorite Star */}
+      
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={[styles.title, highlight ? styles.highlightTitle : null]}>
           {event.title}
@@ -45,12 +45,12 @@ export default function EventCard({ event, onPress, onEdit, highlight }) {
         </TouchableOpacity>
       </View>
 
-      {/* Category & Date */}
+     
       <Text style={highlight ? styles.highlightText : null}>
         {event.category} • {new Date(event.date).toLocaleString()}
       </Text>
 
-      {/* Description */}
+     
       <Text
         numberOfLines={2}
         style={[{ marginTop: 6 }, highlight ? styles.highlightText : null]}
