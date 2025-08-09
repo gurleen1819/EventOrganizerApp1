@@ -25,7 +25,7 @@ export default function EventCard({ event, onPress, onEdit, highlight }) {
         ]
       );
     } else {
-      // Add to favorites immediately without confirmation
+   
       toggleFavorite(event.id, user.uid);
     }
   };
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   highlightCard: {
-    backgroundColor: "#fce4ec", // soft pink background
+    backgroundColor: "#fce4ec", 
     borderColor: "#f48fb1",
     shadowColor: "#f8bbd0",
     shadowOffset: { width: 0, height: 2 },
