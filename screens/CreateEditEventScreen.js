@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"; // <-- added useEffect
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -17,7 +17,6 @@ const CATEGORIES = ["Music", "Art", "Tech", "Sports", "Other"];
 export default function CreateEditEventScreen({ route, navigation }) {
   const editingEvent = route.params?.event;
 
-  // Dynamically set navigation header title
   useEffect(() => {
     navigation.setOptions({
       title: editingEvent ? "Edit Event" : "Create Event",
@@ -29,33 +28,58 @@ export default function CreateEditEventScreen({ route, navigation }) {
 
   const [title, setTitle] = useState(editingEvent?.title || "");
   const [description, setDescription] = useState(editingEvent?.description || "");
+  const [location, setLocation] = useState(editingEvent?.location || "");
   const [category, setCategory] = useState(editingEvent?.category || "Other");
-  const [date] = useState(
-    editingEvent?.date ? new Date(editingEvent.date) : new Date()
+  const [dateInput, setDateInput] = useState(
+    editingEvent?.date
+      ? new Date(editingEvent.date).toISOString().slice(0, 16).replace("T", " ")
+      : ""
   );
   const [loading, setLoading] = useState(false);
 
   const save = async () => {
-    if (!title.trim()) return Alert.alert("Validation", "Title is required");
-    if (!description.trim())
+    if (!title.trim()) {
+      return Alert.alert("Validation", "Title is required");
+    }
+    if (!description.trim()) {
       return Alert.alert("Validation", "Description required");
+    }
+    if (!location.trim()) {
+      return Alert.alert("Validation", "Location is required");
+    }
+    if (!dateInput.trim()) {
+      return Alert.alert("Validation", "Date & time required");
+    }
+
+    const parsedDate = new Date(dateInput);
+    if (isNaN(parsedDate.getTime())) {
+      return Alert.alert("Validation", "Invalid date format. Use: YYYY-MM-DD HH:mm");
+    }
+
     setLoading(true);
     const payload = {
       title: title.trim(),
       description: description.trim(),
+      location: location.trim(),
       category,
-      date: date.toISOString(),
+      date: parsedDate.toISOString(),
       ownerId: editingEvent?.ownerId || user.uid,
       favorites: editingEvent?.favorites || [],
       createdAt: editingEvent?.createdAt || new Date().toISOString(),
     };
+
     try {
       if (editingEvent) {
         await updateEvent(editingEvent.id, payload);
+        Alert.alert("Success", "Event updated successfully!", [
+          { text: "OK", onPress: () => navigation.goBack() },
+        ]);
       } else {
         await createEvent(payload);
+        Alert.alert("Success", "Event added successfully!", [
+          { text: "OK", onPress: () => navigation.goBack() },
+        ]);
       }
-      navigation.goBack();
     } catch (e) {
       Alert.alert("Error", e.message);
     } finally {
@@ -86,6 +110,14 @@ export default function CreateEditEventScreen({ route, navigation }) {
         placeholderTextColor="#bb7a90"
       />
 
+      <TextInput
+        placeholder="Location"
+        style={styles.input}
+        value={location}
+        onChangeText={setLocation}
+        placeholderTextColor="#bb7a90"
+      />
+
       <Text style={styles.label}>Category</Text>
       <View style={styles.chipContainer}>
         {CATEGORIES.map((c) => (
@@ -101,10 +133,14 @@ export default function CreateEditEventScreen({ route, navigation }) {
         ))}
       </View>
 
-      <Text style={styles.label}>Date & Time</Text>
-      <View style={[styles.input, styles.dateInput]}>
-        <Text style={styles.dateText}>{date.toLocaleString()}</Text>
-      </View>
+      <Text style={styles.label}>Date & Time (YYYY-MM-DD HH:mm)</Text>
+      <TextInput
+        placeholder="2025-08-08 19:30"
+        style={styles.input}
+        value={dateInput}
+        onChangeText={setDateInput}
+        placeholderTextColor="#bb7a90"
+      />
 
       <View style={styles.buttonWrapper}>
         <Button
@@ -168,12 +204,6 @@ const styles = StyleSheet.create({
   chipTextActive: {
     color: "#fff",
     fontWeight: "600",
-  },
-  dateInput: {
-    justifyContent: "center",
-  },
-  dateText: {
-    color: "#ad1457",
   },
   buttonWrapper: {
     marginTop: 12,

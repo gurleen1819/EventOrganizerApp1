@@ -10,17 +10,37 @@ export default function EventCard({ event, onPress, onEdit, highlight }) {
 
   const isFav = event.favorites?.includes(user?.uid);
 
+  const handleToggleFavorite = () => {
+    if (isFav) {
+      Alert.alert(
+        "Confirm",
+        "Are you sure you want to remove this event from favorites?",
+        [
+          { text: "Cancel", style: "cancel" },
+          {
+            text: "Yes",
+            onPress: () => toggleFavorite(event.id, user.uid),
+            style: "destructive",
+          },
+        ]
+      );
+    } else {
+      // Add to favorites immediately without confirmation
+      toggleFavorite(event.id, user.uid);
+    }
+  };
+
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[styles.card, highlight ? styles.highlightCard : null]}
     >
-      {/* Title + Favorite */}
+      {/* Title + Favorite Star */}
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={[styles.title, highlight ? styles.highlightTitle : null]}>
           {event.title}
         </Text>
-        <TouchableOpacity onPress={() => toggleFavorite(event.id, isFav)}>
+        <TouchableOpacity onPress={handleToggleFavorite}>
           <Text style={{ fontSize: 18 }}>{isFav ? "★" : "☆"}</Text>
         </TouchableOpacity>
       </View>
