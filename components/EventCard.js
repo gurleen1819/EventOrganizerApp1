@@ -19,13 +19,13 @@ export default function EventCard({ event, onPress, onEdit, highlight }) {
         { text: "Cancel", style: "cancel" },
         {
           text: "Yes",
-          onPress: () => toggleFavorite(event.id, true), // pass true if currently favorite
+          onPress: () => toggleFavorite(event.id, true), 
           style: "destructive",
         },
       ]
     );
   } else {
-    toggleFavorite(event.id, false); // pass false if not currently favorite
+    toggleFavorite(event.id, false); 
   }
 };
 
