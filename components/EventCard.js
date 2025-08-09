@@ -10,25 +10,25 @@ export default function EventCard({ event, onPress, onEdit, highlight }) {
 
   const isFav = event.favorites?.includes(user?.uid);
 
-  const handleToggleFavorite = () => {
-    if (isFav) {
-      Alert.alert(
-        "Confirm",
-        "Are you sure you want to remove this event from favorites?",
-        [
-          { text: "Cancel", style: "cancel" },
-          {
-            text: "Yes",
-            onPress: () => toggleFavorite(event.id, user.uid),
-            style: "destructive",
-          },
-        ]
-      );
-    } else {
-   
-      toggleFavorite(event.id, user.uid);
-    }
-  };
+ const handleToggleFavorite = () => {
+  if (isFav) {
+    Alert.alert(
+      "Confirm",
+      "Are you sure you want to remove this event from favorites?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Yes",
+          onPress: () => toggleFavorite(event.id, true), // pass true if currently favorite
+          style: "destructive",
+        },
+      ]
+    );
+  } else {
+    toggleFavorite(event.id, false); // pass false if not currently favorite
+  }
+};
+
 
   return (
     <TouchableOpacity
